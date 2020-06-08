@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: deploying surge on react
+name: React App Auto Update
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -21,26 +21,18 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
-    # Runs a single command using the runners shell
-    - name: installing node
+    - name: Installing Nodejs
       uses: actions/setup-node@v2-beta
       with:
-        node-version: 12
-      
-
-    # Runs a set of commands using the runners shell
-    - name: installing yarn
+        node-version: 12 
+    
     - uses: borales/actions-yarn@v2.0.0
       with:
-        cmd: install
-    
-    - name: installing build react app
+        cmd: install # will run 'yarn build' command  
+    - name: build React app
       run: yarn build
-      
-    - name: installing surge
-      run:  npm install --global surge
-      
-    - name: deploy surge
-      run: surge ./build reactnewbootcamp.surge.sh --token ${{secrets.my_token}}
+    - name: install surge
+      run: npm install --global surge
+    - name: deploy to surge
+      run: surge ./build reactnewbootcamp.surge.sh --token ${{ secrets.my_token }}
      
